@@ -1,46 +1,50 @@
-import { fetchBreeds, fetchCatByBreed } from "./js/cat-api";
-import SlimSelect from 'slim-select'
-import { selector, divCatInfo, loader, error } from './js/refs'
+import Choices from 'choices.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
+import { selector, divCatInfo, loader, error } from './js/refs'
+import { fetchBreeds, fetchCatByBreed } from "./js/cat-api";
 import { createMarkupSelect, createMarkup} from './js/markup'
 
 selector.addEventListener("change", onChangeSelect);
+
 fetchBreeds()
   .then(obj => {
-      onLoad();
-      return (selector.innerHTML = createMarkupSelect(obj.data));
+    selector.hidden = false;
+    loader.hidden = true;
+    selector.innerHTML = createMarkupSelect(obj.data);
+    choices();
     })
-    .then(() => slimSelect())
-    .catch(onError);
+  .catch(onError);
 
 function onChangeSelect(e) {
   const breedId = e.currentTarget.value;
 
+  loader.hidden = false;
+  divCatInfo.hidden = true;
+
   fetchCatByBreed(breedId)
-    .then(obj => {
-      onLoad();
-      return (divCatInfo.innerHTML = createMarkup(obj.data));
+  .then(obj => {
+    divCatInfo.hidden = false;
+    loader.hidden = true;
+      divCatInfo.innerHTML = createMarkup(obj.data);
+      success()
     })
-    .then(() => success())
     .catch(onError);
 }
 
 function success() {
-  Notify.success('Search successful!', '');
+  Notify.success('Search successful!', {
+        position: 'center-top',
+        timeout: 1000,
+    });
 }
 
 function onError() {
   Report.failure(error.textContent, '');
 }
 
-function onLoad() {
-  selector.hidden = false;
-  loader.classList.remove('loader');
-}
-
-function slimSelect() {
-  new SlimSelect({
-    select: selector,
+function choices() {
+  new Choices(selector, {
+    allowHTML: true
   });
 }
