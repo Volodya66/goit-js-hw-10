@@ -26,10 +26,10 @@ function onChangeSelect(e) {
   .then(obj => {
     divCatInfo.hidden = false;
     loader.hidden = true;
-      divCatInfo.innerHTML = createMarkup(obj.data);
-      success()
-    })
-    .catch(onError);
+    divCatInfo.innerHTML = createMarkup(obj.data);
+    success()
+  })
+  .catch(onError);
 }
 
 function success() {
