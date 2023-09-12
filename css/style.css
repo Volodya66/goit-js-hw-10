@@ -1,0 +1,16 @@
+img {
+  display: block;
+}
+
+.cat-info {
+  display: flex;
+  column-gap: 20px;
+}
+
+.cat-text {
+  font-weight: 700;
+}
+
+.error {
+  color: red;
+}
