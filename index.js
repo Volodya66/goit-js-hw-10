@@ -23,13 +23,19 @@ function onChangeSelect(e) {
   divCatInfo.hidden = true;
 
   fetchCatByBreed(breedId)
-  .then(obj => {
-    divCatInfo.hidden = false;
-    loader.hidden = true;
-    divCatInfo.innerHTML = createMarkup(obj.data);
-    success()
-  })
-  .catch(onError);
+    .then(response => {
+      if (response.status !== 200) {
+        throw new Error();
+      }
+      return response.data;
+    })
+    .then(data => {
+      divCatInfo.hidden = false;
+      loader.hidden = true;
+      divCatInfo.innerHTML = createMarkup(data);
+      success();
+    })
+    .catch(onError);
 }
 
 function success() {
@@ -40,6 +46,7 @@ function success() {
 }
 
 function onError() {
+  divCatInfo.hidden = true;
   Report.failure(error.textContent, '');
 }
 
@@ -48,3 +55,4 @@ function choices() {
     allowHTML: true
   });
 }
+

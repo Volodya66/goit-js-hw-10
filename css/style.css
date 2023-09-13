@@ -23,6 +23,10 @@ img {
   max-width: 900px;
 }
 
+.cat-info[hidden] {
+  display: none;
+}
+
 .cat-text {
   font-weight: 700;
 }
