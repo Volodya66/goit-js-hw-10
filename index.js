@@ -1,4 +1,4 @@
-import Choices from 'choices.js';
+import SlimSelect from 'slim-select'
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { selector, divCatInfo, loader, error } from './js/refs'
@@ -12,7 +12,7 @@ fetchBreeds()
     selector.hidden = false;
     loader.hidden = true;
     selector.innerHTML = createMarkupSelect(obj.data);
-    choices();
+    slimSelect();
     })
   .catch(onError);
 
@@ -50,9 +50,7 @@ function onError() {
   Report.failure(error.textContent, '');
 }
 
-function choices() {
-  new Choices(selector, {
-    allowHTML: true
-  });
-}
-
+function slimSelect() {
+new SlimSelect({
+  select: selector,
+})}
