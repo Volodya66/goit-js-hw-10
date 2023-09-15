@@ -48,6 +48,7 @@ function success() {
 function onError() {
   divCatInfo.hidden = true;
   Report.failure(error.textContent, '');
+  loader.hidden = true;
 }
 
 function slimSelect() {
